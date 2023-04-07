@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file|
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtLinux | bmtLinuxFunc | 401-408 | Linux related | bmtLinux.md |
+|  _linux | _linux_func | 401-408 | Linux related | _linux.md |
 
 **Section Four, Linux**
 
@@ -24,7 +24,7 @@ Third  option is wheter to display message or not include "MES"
 for verbose output
 
 ```sh
-bmtLinuxFunc  checkpac "firefox"  2  "MES"
+_linux_func  checkpac "firefox"  2  "MES"
 ```
 
 Returns 0 for installed , 2 for not installed , 
@@ -33,7 +33,7 @@ Returns 0 for installed , 2 for not installed ,
 402) Linux distro family checker
 
 ```sh
-bmtLinuxFunc distrocheck
+_linux_func distrocheck
 ```
 
 Returns 2-7 for known distro family groups or 52 for unknown.
@@ -43,7 +43,7 @@ Returns 2-7 for known distro family groups or 52 for unknown.
 403) Is text editor variable $EDITOR set?
 
 ```sh
-bmtLinuxFunc isTextEdSet
+_linux_func editor_set
 ```
 
 returns 0 if it was set, 2 if not and sets it to vi
@@ -60,9 +60,9 @@ Creates a log file entry with standard formated date/time stamp.
 | 5 Echo | if "MES" log message will also be echoed to console|
 
 ```sh
-	bmtLinuxFunc log "CRITICAL" "1201 alarm Executive overflow - no vacant areas" mylog /tmp/
-	bmtLinuxFunc log "CRITICAL" "1202 alarm Executive overflow - no core sets" mylog /tmp/
-	bmtLinuxFunc log "INFO" "62 Watchdog reset" mylog /tmp/ "MES"
+	_linux_func log "CRITICAL" "1201 alarm Executive overflow - no vacant areas" mylog /tmp/
+	_linux_func log "CRITICAL" "1202 alarm Executive overflow - no core sets" mylog /tmp/
+	_linux_func log "INFO" "62 Watchdog reset" mylog /tmp/ "MES"
 ```
 
 405) Check if user exists
@@ -70,14 +70,14 @@ Check if user exist on system
 Returns 0 if exists, 2 if not.
 
 ```sh
-bmtLinuxFunc user "gavin"
+_linux_func user "gavin"
 echo "$?"
 ```
 406) Check if variable is set and is empty
 Returns 0  if set and non-empty, 2  if  set and empty ,  3 if unset
 
 ```sh
-bmtLinuxFunc isvarempty varsetfull
+_linux_func isvarempty varsetfull
 echo "$?"
 ```
 
@@ -85,13 +85,13 @@ echo "$?"
 Returns 2 if not running as root
 
 ```sh
-bmtLinuxFunc runasroot
+_linux_func runasroot
 ```
 
 408) Check if command exists in system
 Returns 2 if command does not exist on system.
 
 ```sh
-bmtLinuxFunc iscommand tput
+_linux_func iscommand tput
 echo "$?"
 ```

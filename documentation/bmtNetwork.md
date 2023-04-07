@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtNetwork | bmtNetworkFunc  | 301-302  | Network | bmtNetwork.md |
+|  _network | _network_func  | 301-302  | Network | _network.md |
 
 **Section Three, Network**
 
@@ -17,11 +17,11 @@ Keyword checknet, first option url of website. Returns 0 for connectivity , 2 fo
 2. Param2 NOMES(optional) can be used to surpress verbose output.
 
 ```sh
-bmtNetworkFunc checknet "www.google.ie"
+_network_func checknet "www.google.ie"
 ```
 
 ```sh
-bmtNetworkFunc checknet "www.google.ie" "NOMES"
+_network_func checknet "www.google.ie" "NOMES"
 ```
 
 302) weather
@@ -32,5 +32,5 @@ Weather report by wttr.in, uses wget utility
 2. Param2 format 1-4
 
 ```sh
-bmtNetworkFunc weather Dublin 4
+_network_func weather Dublin 4
 ```

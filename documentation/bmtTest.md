@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtTest  | bmtTestFunc  | 901 | Test | bmtTest.md |
+|  _test  | _test_func  | 901 | Test | _test.md |
 
 **Section nine, Test**
 

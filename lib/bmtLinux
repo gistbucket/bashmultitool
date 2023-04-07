@@ -1,95 +1,90 @@
 #!/bin/bash
 
 # === HEADER ===
-#FileName: bmtLinux
+#FileName: _linux
 #Function: Contains linux related utilities
 #library name: bashmultitool
 #URL: https://github.com/gavinlyonsrepo/BashMultiTool
 
 # === FUNCTIONS ===
 
-function bmtLinuxFunc
-{
-local   red
-red=$(printf "\033[0;31m")
-local   normal
-normal=$(printf "\033[0m")
-local   pacVar=""
+function _linux_func {
+	local red
+	red=$(printf "\033[0;31m")
+	local normal
+	normal=$(printf "\033[0m")
+	local pacVar=""
 
-case "$1" in
+	case "$1" in
 
 	checkpac) # 401 check if package installed
 		case "$3" in
-			1)  # pacman based
-				pacVar=$(pacman -Qqs "$2")
+		1) # pacman based
+			pacVar=$(pacman -Qqs "$2")
 			;;
 
-			2)  # debian based
-				pacVar=$(dpkg -l "$2" 2> /dev/null)
+		2) # debian based
+			pacVar=$(dpkg -l "$2" 2>/dev/null)
 			;;
 
-			3) # rpm based
-				pacVar=$(rpm -qa | grep "$2" 2>/dev/null)
+		3) # rpm based
+			pacVar=$(rpm -qa | grep "$2" 2>/dev/null)
 			;;
 
-			*) # unknown
-				printf '%s\n' "Unsupported Linux distro"
-				return 52
+		*) # unknown
+			printf '%s\n' "Unsupported Linux distro"
+			return 52
 			;;
 		esac
 
-		if [ -n "$pacVar" ]
-		then #installed
+		if [ -n "$pacVar" ]; then #installed
 			#if text input is MES print good install message
-			if [ "$4" = "MES" ]
-			then
+			if [ "$4" = "MES" ]; then
 				printf '%s\n' "$2 is Installed"
 			fi
 			return 0
 		else #not installed
 			#if text input is MES print install bad message
-			if [ "$4" = "MES" ];
-			then
+			if [ "$4" = "MES" ]; then
 				printf '%s\n' "${red}$2 is Not installed ${normal}"
 			fi
 			return 2
 		fi
-	;;
+		;;
 
 	distrocheck) #402 check what distro on
-			if [ -f /etc/redhat-release ]; then
-				# rpm based
-				return 2
-			elif [ -f /etc/fedora-release ]; then
-				# fedora based
-				return 3
-			elif [ -f /etc/lsb-release ]; then
-				# deb based
-				return 4
-			elif [ -d /etc/pacman.d ]; then
-				# pacman based
-				return 5
-			elif [ -f /etc/gentoo-release ]; then
-				# gentoo based
-				return 6
-			elif [ -f /etc/slackware-release ]; then
-				# slackware based
-				return 7
-			else
-				printf '%s\n' "UnKnown Linux distro"
-				return 52
-			fi
-	;;
+		if [ -f /etc/redhat-release ]; then
+			# rpm based
+			return 2
+		elif [ -f /etc/fedora-release ]; then
+			# fedora based
+			return 3
+		elif [ -f /etc/lsb-release ]; then
+			# deb based
+			return 4
+		elif [ -d /etc/pacman.d ]; then
+			# pacman based
+			return 5
+		elif [ -f /etc/gentoo-release ]; then
+			# gentoo based
+			return 6
+		elif [ -f /etc/slackware-release ]; then
+			# slackware based
+			return 7
+		else
+			printf '%s\n' "UnKnown Linux distro"
+			return 52
+		fi
+		;;
 
-	isTextEdSet) #403 set text editor
-		if [ -z "${EDITOR}" ]
-		then
-			export EDITOR="vi"
+	editor_set) #403 set text editor
+		if [ -z "${EDITOR}" ]; then
+			export EDITOR="micro"
 			return 2
 		else
 			return 0
 		fi
-	;;
+		;;
 
 	log) #404
 		declare logdatfVar="%FT%T%z"
@@ -99,71 +94,72 @@ case "$1" in
 		logfileVar="$4.log"
 		local dateVar
 		dateVar=$(date +"$logdatfVar")
-		
+
 		# Check that $statusvar is valid
 		case "$statusVar" in
-		EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG|OK|FAILED|PASSED) : ;;
-		*) printf '%s\n' "Error bmtLinux : log : Invalid state : $statusVar"
-				return 55 ;;
+		EMERGENCY | ALERT | CRITICAL | ERROR | WARNING | NOTICE | INFO | DEBUG | OK | FAILED | PASSED) : ;;
+		*)
+			printf '%s\n' "Error _linux : log : Invalid state : $statusVar"
+			return 55
+			;;
 		esac
-		
+
 		# Create the log message
-		if [ -n "$logmsgVar" ]
-		then
+		if [ -n "$logmsgVar" ]; then
 			logstrVar="$dateVar - $statusVar - $logmsgVar"
 		else
 			logstrVar="$dateVar -- empty log message"
 		fi
-		
+
 		mkdir -p "$5"
-		echo "$logstrVar" >> "$5$logfileVar"
-		
+		echo "$logstrVar" >>"$5$logfileVar"
+
 		# If param 6 added echo as well as log
-		[ "$6" = "MES" ] && echo "$logstrVar" 
+		[ "$6" = "MES" ] && echo "$logstrVar"
 		return 0
-	;;
-	
-	user) #405 	
-	[ -z "$2" ] && return 1
-	if id -u "$2" >/dev/null 2>&1; then
-		return 0
-	else
-		return 2
-	fi
-	;;
-	
+		;;
+
+	user) #405
+		[ -z "$2" ] && return 1
+		if id -u "$2" >/dev/null 2>&1; then
+			return 0
+		else
+			return 2
+		fi
+		;;
+
 	isvarempty) #406
 		local var_name="$2"
 		local var_value="${!var_name}"
 		if [[ -v "$var_name" ]]; then
-		   if [[ -n "$var_value" ]]; then
-			 return 0 # "set and non-empty"
-		   else
-			 return 2 # "set and empty"
-		   fi
+			if [[ -n "$var_value" ]]; then
+				return 0 # "set and non-empty"
+			else
+				return 2 # "set and empty"
+			fi
 		else
 			return 3 # "unset"
 		fi
-	;;
-	
+		;;
+
 	runasroot) #407
-	if [[ ${EUID} -ne 0 ]]; then
-		printf '%s\n' "${red} Error :: This script must run as root, program exiting! ${normal}"
-		return 2
-	else
-		echo "Info :: Running as root"
-		return 0
-	fi
-	;;
-	
-	iscommand) #408 
+		if [[ ${EUID} -ne 0 ]]; then
+			printf '%s\n' "${red} Error :: This script must run as root, program exiting! ${normal}"
+			return 2
+		else
+			echo "Info :: Running as root"
+			return 0
+		fi
+		;;
+
+	iscommand) #408
 		hash "$2" 2>/dev/null || return 2
 		return 0
-	;;
-	
+		;;
+
 	*) # Catch all user typos
-		printf '%s\n'  "Error: Unknown keyword : bashmultitool :bmtLinux: bmtLinuxFunc"
+		printf '%s\n' "Error: Unknown keyword : bashmultitool :_linux: _linux_func"
 		return 255
-	;;
-esac
+		;;
+	esac
 }

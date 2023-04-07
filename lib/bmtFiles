@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === HEADER ===
-#FileName: bmtFiles
+#FileName: _files
 #Function: Contains file related utilities
 #library name: bashmultitool
 #Written: Gavin Lyons
@@ -9,17 +9,16 @@
 
 # === FUNCTIONS ===
 
-function bmtFilesFunc
-{
+function _files_func {
 
-case "$1" in
+	case "$1" in
 
 	isdirempty) # 501
 		if [ -d "$2" ]; then
 			# the directory exists
 			local checkVar=0
 			checkVar=$(find "$2" -mindepth 1 -print | wc -l)
-			if [  "$checkVar" == 0 ]; then
+			if [ "$checkVar" == 0 ]; then
 				return 0 #not empty
 			else
 				return 2 #empty
@@ -27,7 +26,7 @@ case "$1" in
 		else #dir does not exist
 			return 3
 		fi
-	;;
+		;;
 
 	makedir) #502
 		# make dir  makes a directory at path $2 with time/date stamp and enters it
@@ -44,113 +43,111 @@ case "$1" in
 		else
 			return 50
 		fi
-	;;
+		;;
 
 	directoryexists) #  503
-	if [[ -d "$2" ]]; then
-		return 0
-	fi
-	return 2
-	;;
+		if [[ -d "$2" ]]; then
+			return 0
+		fi
+		return 2
+		;;
 
 	fileexists) #504
-	if [[ -f "$2" ]]; then
-		return 0
-	fi
-	return 2
-	;;
+		if [[ -f "$2" ]]; then
+			return 0
+		fi
+		return 2
+		;;
 
 	deviceexists) #  505
-	if [[ -b "$2" ]]; then
-		return 0
-	fi
-	return 2
-	;;
-	
-	isfileempty) # 506
-	if [ -s "$2" ]; then
-		return 0 #not empty
-	else
-		return 2
-	fi
-	;;
-	
-	getfilesize) #507
-	if [[ -f "$2" ]]; then
-		du -h "$2" | cut -f1 
-		return 0
-	fi
-	return 2
-	;;
-	
-	getfilesizebytes) #508
-	if [[ -f "$2" ]]; then
-		wc -c  "$2" |  cut -d ' ' -f1
-		return 0
-	fi
-	return 2
-	;;
-	
-	getmimetype) #509
-	 [ -z "$2" ] && return 2
-	
-	local inputdata="${2}"
-	local mime_output
-	
-	if [[ -f "$inputdata" ]] || [[ -d "$inputdata" ]]; then
-		if type -p mimetype &> /dev/null; then
-			mime_output=$(mimetype --output-format %m "$inputdata")
-		elif type -p file &> /dev/null; then
-			mime_output=$(file --brief --mime-type "$inputdata")
-		else
-			return 3
+		if [[ -b "$2" ]]; then
+			return 0
 		fi
-	else
-		return 4
-	fi
-	
-	printf "%s" "${mime_output}"
-	;;
-	
+		return 2
+		;;
+
+	isfileempty) # 506
+		if [ -s "$2" ]; then
+			return 0 #not empty
+		else
+			return 2
+		fi
+		;;
+
+	getfilesize) #507
+		if [[ -f "$2" ]]; then
+			du -h "$2" | cut -f1
+			return 0
+		fi
+		return 2
+		;;
+
+	getfilesizebytes) #508
+		if [[ -f "$2" ]]; then
+			wc -c "$2" | cut -d ' ' -f1
+			return 0
+		fi
+		return 2
+		;;
+
+	getmimetype) #509
+		[ -z "$2" ] && return 2
+
+		local inputdata="${2}"
+		local mime_output
+
+		if [[ -f "$inputdata" ]] || [[ -d "$inputdata" ]]; then
+			if type -p mimetype &>/dev/null; then
+				mime_output=$(mimetype --output-format %m "$inputdata")
+			elif type -p file &>/dev/null; then
+				mime_output=$(file --brief --mime-type "$inputdata")
+			else
+				return 3
+			fi
+		else
+			return 4
+		fi
+
+		printf "%s" "${mime_output}"
+		;;
+
 	filename) #510 /tmp/text.txt
-	[ -z "$2" ] && return 2
-	case "$3" in
-		1) #510-1 full filename  text.txt
+		[ -z "$2" ] && return 2
+		case "$3" in
+		1)                      #510-1 full filename  text.txt
 			printf "%s" "${2##*/}" #  parameter expansion retain after /
-		  ;;
-		2) #510-2 basename text 
+			;;
+		2) #510-2 basename text
 			local filename basename
-			filename="${2##*/}" #  parameter expansion retain after /
+			filename="${2##*/}"       #  parameter expansion retain after /
 			basename="${filename%.*}" # parameter expansion retain before .
 			printf "%s" "${basename}"
-		  ;;
+			;;
 		3) #510.3 extension .txt
 			local filename extension
-			filename="${2##*/}" #  parameter expansion retain after /
+			filename="${2##*/}"         #  parameter expansion retain after /
 			extension="${filename##*.}" # parameter expansion after .
 			[[ "${filename}" = "${extension}" ]] && return 4
 
 			printf "%s" "${extension}"
-		  ;;
+			;;
 		4) #folder path /tmp
 			declare folderpath=${2:-.}
-			folderpath=${2%/*} 
+			folderpath=${2%/*}
 			printf "%s" "${folderpath}"
-		  ;;
+			;;
 		*)
 			return 3
+			;;
+		esac
+		return 0
 		;;
-	esac
-	return 0
-	;;
-	
-	*) # Catch all user typos
-		printf '%s\n'  "Error: Unknown keyword : bashmultitool :bmtFiles : bmtFilesFunc"
-		return 255
-	;;
 
-esac
+	*) # Catch all user typos
+		printf '%s\n' "Error: Unknown keyword : bashmultitool :_files : _files_func"
+		return 255
+		;;
+
+	esac
 
 }
-
-

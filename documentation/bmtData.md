@@ -1,7 +1,7 @@
 
 | Library file | Function | Sections | Content | help file |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtData | btmDataFunc | 601-607 | Data related | bmtData.md|
+|  _data | btmDataFunc | 601-607 | Data related | _data.md|
 
 **Section Six, Data**
 
@@ -20,7 +20,7 @@
 Keyword intcheck, first option the item to be checked if integer
 
 ```sh
-bmtDataFunc intcheck "$age"
+_data_func intcheck "$age"
 ```
 
 Returns 0 for integer , 2 for non integer.
@@ -30,7 +30,7 @@ Returns 0 for integer , 2 for non integer.
 Keyword alphanumcheck, first option the item to be checked if Alphanumeric
 
 ```sh
-bmtDataFunc alphanumcheck "$address"
+_data_func alphanumcheck "$address"
 ```
 
 Returns 0 for alphanumcheck , 2 for non alphanumcheck.
@@ -40,7 +40,7 @@ Returns 0 for alphanumcheck , 2 for non alphanumcheck.
 Keyword alphacheck) , first option the item to be checked if alphabet
 
 ```sh
-bmtDataFunc alphacheck "$name"
+_data_func alphacheck "$name"
 ```
 
 Returns 0 for alphabet , 2 for non alphabet.
@@ -48,21 +48,21 @@ Returns 0 for alphabet , 2 for non alphabet.
 604)  convert a string to lowercase
 
 ```sh
-result=$(bmtDataFunc lowercase "TEST")   
+result=$(_data_func lowercase "TEST")   
 echo $result
 ```
 
 605)   convert a string to uppercase
 
 ```sh
-result=$(bmtDataFunc upperrcase "test")   
+result=$(_data_func upperrcase "test")   
 echo $result
 ```
 
 606) trim whitespace from a strin
 
 ```sh
-result2=$(bmtDataFunc trim "       test   "
+result2=$(_data_func trim "       test   "
 echo $result2
 ```
 
@@ -70,6 +70,6 @@ echo $result2
 Returns string length , maximum 249 , 250 is Null string error.
 
 ```sh
-bmtDataFunc strlen "test string 123" #15
+_data_func strlen "test string 123" #15
 echo $?
 ```

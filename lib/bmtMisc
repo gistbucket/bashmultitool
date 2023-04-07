@@ -1,6 +1,6 @@
 #!/bin/bash
 # === HEADER ===
-#FileName: bmtMisc
+#FileName: _misc
 #Function: Contains miscellaneous utilities.
 #library name: bashmultitool
 #Written: Gavin Lyons
@@ -8,19 +8,18 @@
 
 # ===FUNCTIONS ===
 
-function bmtMiscFunc
-{
+function _misc_func {
 
-case "$1" in
+	case "$1" in
 
 	password) #801
 		local mylengthVar=0
 		echo "Random Password generator :"
 		if [ -z "$2" ]; then
-			cd "/tmp/"  || return 3
+			cd "/tmp/" || return 3
 			echo "Output Path /tmp/"
 		else
-			cd "$2"  || return 3
+			cd "$2" || return 3
 			echo "Output Path $2"
 		fi
 		touch passwordBMT.txt
@@ -31,15 +30,15 @@ case "$1" in
 			mylengthVar=20
 		fi
 		#check integer
-		if [[ "$mylengthVar" != *[!0-9]* ]];then
-			echo -n "$(< /dev/urandom tr -dc "_*?#!A-Z-a-z-0-9" | head -c "$mylengthVar";)">passwordBMT.txt
+		if [[ "$mylengthVar" != *[!0-9]* ]]; then
+			echo -n "$(tr </dev/urandom -dc "_*?#!A-Z-a-z-0-9" | head -c "$mylengthVar")" >passwordBMT.txt
 			echo "Password generated"
 			return 0
 		else
 			return 2
 		fi
-	;;
-	
+		;;
+
 	getbatlevel) #802
 		local Filepath="/sys/class/power_supply/$2/capacity"
 		if ! [[ -f $Filepath ]]; then
@@ -50,35 +49,36 @@ case "$1" in
 			return 128
 		fi
 
-		read -r < "/sys/class/power_supply/$2/capacity"
-		if [ "$3" = "MES" ]
-		then
+		read -r <"/sys/class/power_supply/$2/capacity"
+		if [ "$3" = "MES" ]; then
 			printf 'Battery is at %d%% capacity.\n' "$REPLY" # Reply is built into read.
 		fi
 		return "$REPLY"
-	;;
-	
+		;;
+
 	drawbox) #803
 		local width
 		local place
-		local textarray=("$@") 
+		local textarray=("$@")
 		local colorbox="$2"
 		local colortext="$3"
 		local inputparam
-		
+
 		# remove color's and subsection name from array
-		for inputparam in 0 1 2 
-		do
+		for inputparam in 0 1 2; do
 			unset 'textarray[inputparam]'
 		done
-			
-		#${s[@]} – all elements of array s; ((width<${#l})) – ((..)) shell arithmetic testing 
+
+		#${s[@]} – all elements of array s; ((width<${#l})) – ((..)) shell arithmetic testing
 		#whether variable width's value is less than variable l value's length, obtained
-		#with parameter expansion (# – string length); ${place//?/-} – parameter expansion  
-		#replacing all occurrences of any character with a “-” (// – replace all; ? – 
-		#wildcard meaning any character). 
+		#with parameter expansion (# – string length); ${place//?/-} – parameter expansion
+		#replacing all occurrences of any character with a “-” (// – replace all; ? –
+		#wildcard meaning any character).
 		for word in "${textarray[@]}"; do
-			((width<${#word})) && { place="$word"; width="${#word}"; }
+			((width < ${#word})) && {
+				place="$word"
+				width="${#word}"
+			}
 		done
 		tput setaf "$colorbox"
 		echo -e " -${place//?/-}-\n| ${place//?/ } |"
@@ -87,31 +87,31 @@ case "$1" in
 		done
 		echo -e "| ${place//?/ } |\n -${place//?/-}-"
 		tput sgr 0
-	;;
-	
+		;;
+
 	title)
 		local colorbox="$2"
 		local colortext="$3"
 		local bannersymbol="$4"
 		local textmsg="$5"
 		local edge
-		
+
 		edge=$(echo "$textmsg####" | sed "s/./$bannersymbol/g")
-		
+
 		tput setaf "$colorbox"
 		printf '%s\n' "$edge"
 		printf '%s%s%s%s%s\n' "$bannersymbol " "$(tput setaf "$colortext")" "$textmsg" "$(tput setaf "$colorbox")" " $bannersymbol"
 		printf '%s\n' "$edge"
 		tput sgr 0
-		
-	;;
-	
+
+		;;
+
 	centertext)
 		local banner outputtext
-		local inputtext=" ${2} " bannersymbol="${3:- }" 
+		local inputtext=" ${2} " bannersymbol="${3:- }"
 		local stringlength=${#inputtext}
 		local bannerlength="$((($(tput cols) - stringlength) / 2))"
-		
+
 		[[ -n "${bannersymbol}" ]] && bannersymbol="${bannersymbol:0:1}"
 		for ((i = 0; i < bannerlength; i++)); do
 			banner+="${bannersymbol}"
@@ -120,7 +120,7 @@ case "$1" in
 		outputtext="${banner}${inputtext}${banner}"
 		[[ $((($(tput cols) - stringlength) % 2)) -ne 0 ]] && outputtext+="${bannersymbol}"
 		printf "%s" "${outputtext}"
-	;;
+		;;
 
 	gauge)
 		local label="$2"
@@ -129,21 +129,19 @@ case "$1" in
 		local max="$5"
 		local symbol="$6"
 		local symbolempty="$7"
-		
-		printf "%s=%3d %d" "$label" "$value" "$min" 
-		echo -n "["
-		for ((i = min ; i <= value; i++)); do echo -n "$symbol"; done
-		for ((j = value+1 ; j <= max ; j++)); do echo -n "$symbolempty"; done
-		echo -n "]"
-		printf "%d" "$max" 
-		echo
-	;;
- 
-			
-	*) # Catch all users typos
-		printf '%s\n'  "Error: Unknown keyword : bashMultiTool: bmtMisc: bmtMiscFunc"
-		return 255
-	;;
-esac
-}
 
+		printf "%s=%3d %d" "$label" "$value" "$min"
+		echo -n "["
+		for ((i = min; i <= value; i++)); do echo -n "$symbol"; done
+		for ((j = value + 1; j <= max; j++)); do echo -n "$symbolempty"; done
+		echo -n "]"
+		printf "%d" "$max"
+		echo
+		;;
+
+	*) # Catch all users typos
+		printf '%s\n' "Error: Unknown keyword : bashMultiTool: _misc: _misc_func"
+		return 255
+		;;
+	esac
+}

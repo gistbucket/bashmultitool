@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # === HEADER ===
-#FileName: bmtPrint
-#Function: prints to screen 
+#FileName: _print
+#Function: prints to screen
 #library name: bashmultitool
 #Written: Gavin Lyons
 #URL: https://github.com/gavinlyonsrepo/BashMultiTool
@@ -10,75 +10,71 @@
 # === FUNCTIONS ===
 
 # Name: function for printing text , test 101
-# Process: Prints passed text "$2" in 7 modes and 8 colours 
+# Process: Prints passed text "$2" in 7 modes and 8 colours
 #  "$1" is keyword. return 0 for ok 255 for error
 
-function bmtPrintFunc
-{
-local -r normal=$(printf "\033[0m") # Text Reset
-local modeVar=""  # hold the mode
-local colorVar="" # hold the color
-local printVar="" 
+function _print_func {
+	local -r normal=$(printf "\033[0m") # Text Reset
+	local modeVar=""                    # hold the mode
+	local colorVar=""                   # hold the color
+	local printVar=""
 
-# Normal text with reset
-if [ "$1" = "norm" ]
-then
-	printf '%s\n' "${normal}$2" 
+	# Normal text with reset
+	if [ "$1" = "norm" ]; then
+		printf '%s\n' "${normal}$2"
+		return 0
+	fi
+
+	# check for  "_" i.e. for regular text mode
+	if [[ "$1" != *"_"* ]]; then
+		modeVar="n" #r for regular
+		colorVar="$1"
+	else
+		local strVar="$1"
+		# Extract from this string using parameter expansion
+		modeVar=${strVar%_*}   # Retain before the colon for code
+		colorVar=${strVar##*_} # retain after the colon for colour
+	fi
+
+	# Get mode
+	case $modeVar in
+	n) modeVar="\033[0;3" ;;    # normal
+	b) modeVar="\033[1;3" ;;    # Bold
+	u) modeVar="\033[4;3" ;;    # Underline
+	bg) modeVar="\033[4" ;;     # background
+	i) modeVar="\033[0;9" ;;    # high intensity
+	bh) modeVar="\033[1;9" ;;   # high intensity bold
+	hbg) modeVar="\033[0;10" ;; # High intensity backgrounds
+	*)                          # Catch user typos
+		printf '%s\n' "1 Error: Unknown keyword $1 : bashmultitool: _print: _print_func"
+		return 255
+		;;
+	esac
+
+	# get colour
+	case $colorVar in
+	black) colorVar="0m" ;;
+	red) colorVar="1m" ;;
+	green) colorVar="2m" ;;
+	yellow) colorVar="3m" ;;
+	blue) colorVar="4m" ;;
+	purple) colorVar="5m" ;;
+	cyan) colorVar="6m" ;;
+	white) colorVar="7m" ;;
+	*) # Catch user typos
+		printf '%s\n' "Error: Unknown keyword $1 : bashmultitool: _print: _print_func"
+		return 255
+		;;
+	esac
+
+	# add mode + color strings and print text
+	#if no text don't print Carriage return or reset for just color change
+	printVar=$(printf "%s""$modeVar$colorVar")
+	if [ -n "$2" ]; then
+		printf '%s\n' "${printVar}$2${normal}"
+	else
+		printf '%s' "${printVar}$2"
+	fi
 	return 0
-fi
-
-# check for  "_" i.e. for regular text mode
-if [[ "$1" != *"_"* ]]; then
-	modeVar="n" #r for regular
-	colorVar="$1"
-else 
-	local strVar="$1"
-	# Extract from this string using parameter expansion
-	modeVar=${strVar%_*} # Retain before the colon for code
-	colorVar=${strVar##*_} # retain after the colon for colour
-fi
-
-# Get mode
-case $modeVar in 
-	n)  modeVar="\033[0;3";; # normal
-	b)  modeVar="\033[1;3";; # Bold
-	u)  modeVar="\033[4;3";; # Underline
-	bg) modeVar="\033[4";; # background
-	i)  modeVar="\033[0;9";; # high intensity 
-	bh)  modeVar="\033[1;9";; # high intensity bold
-	hbg)  modeVar="\033[0;10";; # High intensity backgrounds
-	*) # Catch user typos    
-		printf '%s\n'  "1 Error: Unknown keyword $1 : bashmultitool: bmtPrint: bmtPrintFunc"
-		return 255
-	;;
-esac
-
-# get colour
-case $colorVar in
-	black)colorVar="0m";;
-	red)colorVar="1m";;
-	green)colorVar="2m";;
-	yellow)colorVar="3m";;
-	blue)colorVar="4m";;
-	purple)colorVar="5m";;
-	cyan)colorVar="6m";;
-	white)colorVar="7m";; 
-	*) # Catch user typos 
-		printf '%s\n'  "Error: Unknown keyword $1 : bashmultitool: bmtPrint: bmtPrintFunc"
-		return 255
-	;;
-esac
-
-# add mode + color strings and print text
-#if no text don't print Carriage return or reset for just color change
-printVar=$(printf "%s""$modeVar$colorVar")
-if [ -n "$2" ]
-then
-	printf '%s\n' "${printVar}$2${normal}"
-else
-	printf '%s' "${printVar}$2"
-fi
-return 0
 
 }
-

@@ -4,41 +4,39 @@
 
 #name: Gavin Lyons
 #Title : Bashmultitool
-#Description: A Bash Shell library for commonly used functions 
-# can be imported into shell scripts to create functional and colorful 
+#Description: A Bash Shell library for commonly used functions
+# can be imported into shell scripts to create functional and colorful
 # scripts and Terminal users interfaces(TUI). This file is placeholder
-# for library with meta data 
+# for library with meta data
 #URL: https://github.com/gavinlyonsrepo/bashmultitool
 
 LIBPATH="/usr/lib/bashmultitool/"
-for MYFILE in "$LIBPATH"*;
-do
+for MYFILE in "$LIBPATH"*; do
 	source "$MYFILE"
 done
 
 # === FUNCTIONS ===
 
 #FUNCTION HEADER
-# NAME : Bmt_Metadata_Func
+# NAME : Bmt_Metadata_func
 # DESCRIPTION : Function to display metadata on  Bashmultitool
- 
-function Bmt_Metadata_Func
-{
-	bmtPromptFunc line "=" b_yellow
-	bmtPrintFunc  norm " Title : Bashmultitool"
-	bmtPrintFunc  norm " Description : A Bash Shell library file for commonly used functions 
+
+function Bmt_Metadata_func {
+	_prompt_func line "=" b_yellow
+	_print_func norm " Title : Bashmultitool"
+	_print_func norm " Description : A Bash Shell library file for commonly used functions 
  can be imported into shell scripts to create functional and colorful 
  scripts and Terminal users interfaces(TUI). "
-	bmtPrintFunc  norm " Version : 2.1-2"
-	bmtPrintFunc  norm " License: MIT"
-	bmtPrintFunc  norm " URL : https://github.com/gavinlyonsrepo/bashmultitool "
-	bmtPrintFunc  norm " Path : /usr/lib/bashmultitool"
-	bmtPromptFunc line "=" b_yellow
-	bmtPromptFunc anykey "and exit." b_yellow
+	_print_func norm " Version : 2.1-2"
+	_print_func norm " License: MIT"
+	_print_func norm " URL : https://github.com/gavinlyonsrepo/bashmultitool "
+	_print_func norm " Path : /usr/lib/bashmultitool"
+	_prompt_func line "=" b_yellow
+	_prompt_func anykey "and exit." b_yellow
 }
 
 #==MAIN CODE==
 echo " "
-Bmt_Metadata_Func
+Bmt_Metadata_func
 echo " "
 #==END ==

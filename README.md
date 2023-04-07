@@ -74,7 +74,7 @@ To access library functions from your shell scripts type:
 # [function-name] [keyword] [options]
 # eg
 
-bmtPrintFunc b_red "Hello World"
+_print_func b_red "Hello World"
  ```
 
 Software
@@ -94,15 +94,15 @@ A script to print library meta data is also installed.
 
 | Library file | Function | Sections | Content | Doc link |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtPrint | bmtPrintFunc | 101 | Printing text | [bmtPrint help file](documentation/bmtPrint.md)|
-|  bmtPrompt | bmtPromptFunc | 201-210 | Prompts | [ bmtPrompt help file](documentation/bmtPrompt.md)|
-|  bmtNetwork  | bmtNetworkFunc  | 301-302 | Network related | [bmtNetwork help file](documentation/bmtNetwork.md)|
-|  bmtLinux | bmtLinuxFunc | 401-408 | Linux related | [bmtLinux help file](documentation/bmtLinux.md)|
-|  bmtFiles | bmtFilesFunc | 501-510 | File related | [bmtFiles help file](documentation/bmtFiles.md)|
-|  bmtData | btmDataFunc | 601-607 | Data related | [bmtData help file](documentation/bmtData.md)|
-|  bmtTime | btmTimeFunc | 701-710 | Time related | [bmtTime help file](documentation/bmtTime.md)|
-|  bmtMisc  | bmtMiscFunc  | 801-806 | Miscellaneous | [bmtMisc help file](documentation/bmtMisc.md)|
-|  bmtTest  | bmtTestFunc  | 901 |  internal library test | [bmtTest help file](documentation/bmtTest.md)|
+|  _print | _print_func | 101 | Printing text | [_print help file](documentation/_print.md)|
+|  _prompt_ | _prompt_func | 201-210 | Prompts | [ _prompt_ help file](documentation/_prompt_.md)|
+|  _network  | _network_func  | 301-302 | Network related | [_network help file](documentation/_network.md)|
+|  _linux | _linux_func | 401-408 | Linux related | [_linux help file](documentation/_linux.md)|
+|  _files | _files_func | 501-510 | File related | [_files help file](documentation/_files.md)|
+|  _data | btmDataFunc | 601-607 | Data related | [_data help file](documentation/_data.md)|
+|  _time | btmTimeFunc | 701-710 | Time related | [_time help file](documentation/_time.md)|
+|  _misc  | _misc_func  | 801-806 | Miscellaneous | [_misc help file](documentation/_misc.md)|
+|  _test  | _test_func  | 901 |  internal library test | [_test help file](documentation/_test.md)|
 
 The library contains eight section's, Each section has one file with one function. 
 Which contains 54 sub-sections in total.
@@ -111,7 +111,7 @@ Printing, prompting, Linux related, file related,
 data related, time related , network related and miscellaneous.
 The sections are mostly independent of each other
 you can source them individually if you wish, however the prompt file *is* 
-dependent on print. There is also  a ninth test section bmtTest used to test library.
+dependent on print. There is also  a ninth test section _test used to test library.
 
 The repo also contains a *test folder* where a test file used in development are available, one function for each library file. The test file "testTest.sh", runs an semi-automated test on entire library and produces a report.  Pass the test file a number between 1-9 , 1-8 correspond to the sections, 9 will test entire library. 
 

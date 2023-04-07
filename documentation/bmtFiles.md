@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file|
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtFiles | bmtFilesFunc | 501-510 | File related | bmtFiles.md |
+|  _files | _files_func | 501-510 | File related | _files.md |
 
 **Section Five,  File**
 
@@ -23,7 +23,7 @@ The keyword is makedir, First option is path , second is the text
 appended to end.
 
 ```sh
-bmtFilesFunc makedir "/tmp/" "-TEST"
+_files_func makedir "/tmp/" "-TEST"
 ```
 
 Output folders are created with following time/date stamp syntax 
@@ -37,7 +37,7 @@ The keyword is isdirempty , the first option is path returns 0 for empty
  , 2 for not empty , 3 if it does not exist.
 
 ```sh
-bmtFilesFunc isdirempty "$HOME/Desktop/TEST/file/"
+_files_func isdirempty "$HOME/Desktop/TEST/file/"
 ```
 
 503) directory exists
@@ -45,7 +45,7 @@ bmtFilesFunc isdirempty "$HOME/Desktop/TEST/file/"
 returns 0 for success, 2 for failure
 
 ```sh
-bmtFilesFunc directoryexists /tmp/foo
+_files_func directoryexists /tmp/foo
 ```
 
 504) file exists
@@ -53,7 +53,7 @@ bmtFilesFunc directoryexists /tmp/foo
 returns 0 for success, 2 for failure
 
 ```sh
-bmtFilesFunc fileexists /tmp/foo
+_files_func fileexists /tmp/foo
 ```
 
 505) device exists
@@ -61,7 +61,7 @@ bmtFilesFunc fileexists /tmp/foo
 returns 0 for success, 2 for failure
 
 ```sh
-bmtFilesFunc deviceexists /dev/sda
+_files_func deviceexists /dev/sda
 ```
 
 506) Empty File
@@ -69,20 +69,20 @@ Check if file empty
 returns 0 if not empty , 2 if empty
 
 ```sh
-bmtFilesFunc isfileempty "/foo/foo.txt"
+_files_func isfileempty "/foo/foo.txt"
 echo $?
 ```
 
 507) File size 
 Prints file size and returns 0 if file does not exist returns 2
 ```sh
-bmtFilesFunc getfilesize "/foo/foo.txt"
+_files_func getfilesize "/foo/foo.txt"
 ```
 
 508) File Size in bytes 
 Prints file size and returns 0 if file does not exist returns 2
 ```sh
-bmtFilesFunc getfilesizebytes "/foo/foo.txt"
+_files_func getfilesizebytes "/foo/foo.txt"
 ```
 
 509) Display mime type of input file
@@ -90,7 +90,7 @@ Returns 4 If file/directory does not exist. , 3 If file or mimetype command not 
 2 if missing arguments, 0 for success. 
 
 ```sh
-bmtFilesFunc getmimetype "$TESTOBJECTS/full.txt" >> /tmp/mytempfile123.txt
+_files_func getmimetype "$TESTOBJECTS/full.txt" >> /tmp/mytempfile123.txt
 echo $?
 ```
 510) File name extraction
@@ -100,6 +100,6 @@ Returns 0 for success, 2 for missing arguments , 3 for wrong 2nd argument value,
 2. Param2 1-4 1 for filename, 2 for basename, 3 for extension ,4 for folder path
 
 ```sh
-bmtFilesFunc filename "/foo/foo123/tv.png" 4 
+_files_func filename "/foo/foo123/tv.png" 4 
 echo  " :: Folder name $?"
 ```

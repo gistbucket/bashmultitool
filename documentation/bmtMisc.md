@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtMisc  | bmtMiscFunc  | 801-806  | Miscellaneous | bmtMisc.md |
+|  _misc  | _misc_func  | 801-806  | Miscellaneous | _misc.md |
 
 
 **Section Eight , misc**
@@ -20,7 +20,7 @@ Prompts user for length of password. Optional path can be added, if no path adde
 file passed in /tmp/.
 
 ```sh
-bmtMiscFunc password "/home/foo"
+_misc_func password "/home/foo"
 ```
 
 802) Return laptop battery level
@@ -29,7 +29,7 @@ bmtMiscFunc password "/home/foo"
 * Param 2 "MES" or blank , if exist print message
 
 ```sh
-bmtMiscFunc getbatlevel "BAT0" "MES"
+_misc_func getbatlevel "BAT0" "MES"
 echo "$?"
 ```
 803) Create a multi-line box with text inside it 
@@ -39,7 +39,7 @@ echo "$?"
 3. The Rest of Params are the lines of text
 
 ```sh
-bmtMiscFunc drawbox 1 2 'first line' 'second line' 'third line'
+_misc_func drawbox 1 2 'first line' 'second line' 'third line'
 ```
 
 804) Create a single line box with variable box character. 
@@ -49,7 +49,7 @@ bmtMiscFunc drawbox 1 2 'first line' 'second line' 'third line'
 4. Param 4 text
 
 ```sh
-bmtMiscFunc title 2 6 '#' 'hello'
+_misc_func title 2 6 '#' 'hello'
 ```
 
 805) Centered text with option  banner filler
@@ -57,7 +57,7 @@ bmtMiscFunc title 2 6 '#' 'hello'
 2. Param2 Banner symbol 
 
 ```sh
-bmtMiscFunc centertext "Hello World" =
+_misc_func centertext "Hello World" =
 ```
 
 806) Display Gauge, display a gauge bar showing variable value
@@ -70,5 +70,5 @@ bmtMiscFunc centertext "Hello World" =
 6. Param6  Gauge empty symbol
 
 ```sh
-bmtMiscFunc gauge  "Volts" 25 1 50 "#" "."
+_misc_func gauge  "Volts" 25 1 50 "#" "."
 ```

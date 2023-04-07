@@ -1,72 +1,67 @@
 #!/bin/bash
 
 # === HEADER ===
-#FileName: bmtData
+#FileName: _data
 #Function: Contains Data utilities.
 #library name: bashmultitool
 #Written: Gavin Lyons
 #URL: https://github.com/gavinlyonsrepo/BashMultiTool
 
 # ===FUNCTIONS ===
-function bmtDataFunc
-{
-	
-case "$1" in
+function _data_func {
 
-	intcheck) # 601 
-		if [[ "$2" != *[!0-9]* ]];
-			then
+	case "$1" in
+
+	intcheck) # 601
+		if [[ "$2" != *[!0-9]* ]]; then
 			#success an integer
 			return 0
 		fi
-	;;
+		;;
 
 	alphanumcheck) #602
-		if [[ "$2" != *[!0-9a-zA-Z]* ]];
-			then
+		if [[ "$2" != *[!0-9a-zA-Z]* ]]; then
 			#success an alpha numeric string
 			return 0
 		fi
-	;;
+		;;
 
 	alphacheck) # 603
-		if [[ "$2" != *[!a-zA-Z]* ]];
-			then
+		if [[ "$2" != *[!a-zA-Z]* ]]; then
 			#success an alpha string
 			return 0
 		fi
-	;;
-	
+		;;
+
 	# 604
-	lowercase) 
-		echo "$2" | tr '[:upper:]' '[:lower:]' 
-	;;
-	
+	lowercase)
+		echo "$2" | tr '[:upper:]' '[:lower:]'
+		;;
+
 	# 605
-	uppercase) 
-		echo "$2" | tr '[:lower:]' '[:upper:]' 
-	;;
-	
+	uppercase)
+		echo "$2" | tr '[:lower:]' '[:upper:]'
+		;;
+
 	# 606
-	trim) 
+	trim)
 		: "${2#"${2%%[![:space:]]*}"}"
 		: "${_%"${_##*[![:space:]]}"}"
 		printf '%s\n' "$_"
-	;;
-	
+		;;
+
 	#607
-	strlen) 
+	strlen)
 		[ -z "$2" ] && return 250
 		return "$(printf "%s\\n" "${#2}")"
-	;;
+		;;
 
 	*) # Catch all users typos
-		printf '%s\n'  "Error: Unknown keyword : bashMultiTool: bmtData : bmtDataFunc"
+		printf '%s\n' "Error: Unknown keyword : bashMultiTool: _data : _data_func"
 		return 255
-	;;
-	
-esac
+		;;
 
-return 2 # needed default
+	esac
+
+	return 2 # needed default
 }
-

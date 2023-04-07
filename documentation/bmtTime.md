@@ -1,6 +1,6 @@
 | Library file | Function | Sections | Content | help file |
 | ---- | ---- | ---- | ---- | ---- |
-|  bmtTime  | bmtTimeFunc  | 701-710  | Timing related | bmtTime.md |
+|  _time  | _time_func  | 701-710  | Timing related | _time.md |
 
 **Section Seven, Time**
 
@@ -17,20 +17,20 @@
 701) Converts passed date-time string to  UNIX epoch time
 
 ```sh
-bmtTimeFunc epochconvert "2022-04-27 19:42:01 "
+_time_func epochconvert "2022-04-27 19:42:01 "
 ```
 
 702) Print current unix epoch time.
 
 ```sh
-bmtTimeFunc epochnow
+_time_func epochnow
 ```
 
 703) Spinner Animation for non-verbose process/commands that take long time
 
 ```sh
 	# call spinner section put run in background and save PID
-	bmtTimeFunc  spin &
+	_time_func  spin &
 	pid=$!
 	disown
 	
@@ -52,9 +52,9 @@ startwatch creates a global variable called _BMT_START_WATCH
 and uses bc  An arbitrary precision calculator language.
 
 ```sh
-bmtTimeFunc startWatch
+_time_func startWatch
 sleep 2.8
-bmtTimeFunc stopWatch
+_time_func stopWatch
 # returns  ~ 2.813207
 ```
 708) Progress Bar
@@ -68,7 +68,7 @@ percentage completed.
 ```sh
 	echo " "
 	echo "Test 708 "
-	bmtTimeFunc  progressbar 1 &
+	_time_func  progressbar 1 &
 	pid=$!
 	disown
 	echo "START"
@@ -84,7 +84,7 @@ percentage completed.
 709) Convert Epoch time to date format
 
 ```sh
-bmtTimeFunc dateformat "1651084921" "%FT%T%z"
+_time_func dateformat "1651084921" "%FT%T%z"
 # prints ~ 2022-04-27T19:42:01+0100
 ```
 
@@ -92,7 +92,7 @@ bmtTimeFunc dateformat "1651084921" "%FT%T%z"
 
 ```sh
 	# call spinner section put run in background and save PID
-	bmtTimeFunc  spintwo &
+	_time_func  spintwo &
 	pid=$!
 	disown
 	
